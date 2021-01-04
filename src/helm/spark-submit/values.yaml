@@ -1,7 +1,11 @@
 image:
   # -- image name
-  repository: wistefan/orion-loadtest
+  repository:  wistefan/cosmos-spark-example-submit
   # -- image tag
   tag: latest
   # -- specification of the image pull policy
   pullPolicy: Always
+
+driver:
+  port: 40694
+  host: spark-submit

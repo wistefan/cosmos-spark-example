@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "spark-submit.fullname" . }}
+  labels:
+    {{ include "spark-submit.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "spark-submit.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        {{ include "spark-submit.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+          - name: MASTER_URL
+            value: "spark://spark-master-svc:7077"
+          - name: DRIVER_PORT
+            value: "{{ .Values.driver.port }}"
+          - name: DRIVER_HOST
+            value: "{{ .Values.driver.host }}"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /opt/bitnami/spark/conf/spark-defaults.conf
+              subPath: spark-defaults.conf
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "spark-submit.fullname" . }}
+            items:
+              - key: spark-defaults.conf
+                path: spark-defaults.conf
