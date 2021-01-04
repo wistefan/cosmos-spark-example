@@ -7,7 +7,7 @@ on:
       - master
 
 env:
-  IMAGE_NAME: wistefan/spark-example-submit
+  IMAGE_NAME: wistefan/cosmos-spark-example-submit
 
 jobs:
   
