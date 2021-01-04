@@ -2,9 +2,10 @@ FROM  bitnami/spark:3.0.1-debian-10-r115
 
 ENV MASTER_URL=spark://localhost:7077
 ENV CLASS=io.github.wistefan.cosmos.ExampleLDReceiver
-ENV DRIVER_HOST=spark-master-svc
+ENV DRIVER_HOST=spark-submit
+ENV DRIVER_PORT=40694
 
 RUN mkdir /opt/application
 COPY target/cosmos-spark-example-0.0.1-SNAPSHOT.jar /opt/application/app.jar
 
-CMD /opt/bitnami/spark/bin/spark-submit --class $CLASS --master $MASTER_URL --deploy-mode client /opt/application/app.jar --conf "spark.driver.host=$DRIVER_HOST"
+CMD /opt/bitnami/spark/bin/spark-submit --class $CLASS --master $MASTER_URL --deploy-mode client /opt/application/app.jar --conf "spark.driver.host=$DRIVER_HOST" --conf "spark.driver.port=$DRIVER_PORT"
