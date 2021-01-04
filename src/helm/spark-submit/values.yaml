@@ -1,0 +1,7 @@
+image:
+  # -- image name
+  repository: wistefan/orion-loadtest
+  # -- image tag
+  tag: latest
+  # -- specification of the image pull policy
+  pullPolicy: Always

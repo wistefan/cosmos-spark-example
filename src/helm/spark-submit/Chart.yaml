@@ -1,0 +1,5 @@
+apiVersion: v2
+name: spark-submit
+version: 0.0.1
+appVersion: 0.0.1
+description: A Helm chart for submitting the spark job on  a k8s based spark
