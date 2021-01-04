@@ -8,7 +8,7 @@ object ExampleLDReceiver {
 
   def main(args: Array[String]): Unit = {
     val sparkConf = new SparkConf().setAppName("ExampleLDReceiver")
-    val ssc = new StreamingContext(sparkConf, Seconds(10))
+    val ssc = new StreamingContext(sparkConf, Seconds(1000))
 
     val eventStream = ssc.receiverStream(new NGSILDReceiver(9001))
     eventStream.flatMap(e => e.entities).print()
