@@ -8,4 +8,4 @@ ENV DRIVER_PORT=40694
 RUN mkdir /opt/application
 COPY target/cosmos-spark-example-0.0.1-SNAPSHOT.jar /opt/application/app.jar
 
-CMD /opt/bitnami/spark/bin/spark-submit --class $CLASS --master $MASTER_URL --deploy-mode client /opt/application/app.jar --conf spark.driver.host=$DRIVER_HOST --conf spark.driver.port=$DRIVER_PORT
+CMD /opt/bitnami/spark/bin/spark-submit --class $CLASS --master $MASTER_URL --deploy-mode client /opt/application/app.jar --conf "spark.driver.extraJavaOptions=-Dlog4jspark.root.logger=WARN,console"
