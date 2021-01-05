@@ -9,16 +9,22 @@ object ExampleLDReceiver {
   def main(args: Array[String]): Unit = {
     println("Started ld receiver")
     val sparkConf = new SparkConf().setAppName("ExampleLDReceiver")
-    val ssc = new StreamingContext(sparkConf, Seconds(10))
+    val ssc = new StreamingContext(sparkConf, Seconds(60))
 
     val eventStream = ssc.receiverStream(new NGSILDReceiver(9001))
-    eventStream.flatMap(e => e.entities)
-      .map(e =>  e.`type`)
+    // Process event stream
+    val processedDataStream= eventStream
+      .flatMap(event => event.entities)
+      .map(ent => {
+        new Sensor(ent.`type`)
+      })
       .countByValue()
       .window(Seconds(60))
-      .print()
+
+    processedDataStream.print()
 
     ssc.start()
     ssc.awaitTermination()
   }
+  case class Sensor(device: String)
 }
