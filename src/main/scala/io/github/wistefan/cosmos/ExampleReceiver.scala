@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory
 object ExampleReceiver {
 
   def main(args: Array[String]): Unit = {
+    println("Started v2 receiver")
+
     val sparkConf = new SparkConf().setAppName("ExampleReceiver")
     val ssc = new StreamingContext(sparkConf, Seconds(10))
 

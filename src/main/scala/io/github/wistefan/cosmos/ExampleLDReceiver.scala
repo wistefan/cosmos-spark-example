@@ -7,6 +7,7 @@ import org.fiware.cosmos.orion.spark.connector.{NGSILDReceiver, OrionReceiver, O
 object ExampleLDReceiver {
 
   def main(args: Array[String]): Unit = {
+    println("Started ld receiver")
     val sparkConf = new SparkConf().setAppName("ExampleLDReceiver")
     val ssc = new StreamingContext(sparkConf, Seconds(1000))
 
