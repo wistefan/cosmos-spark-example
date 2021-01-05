@@ -12,7 +12,10 @@ object ExampleLDReceiver {
     val ssc = new StreamingContext(sparkConf, Seconds(1000))
 
     val eventStream = ssc.receiverStream(new NGSILDReceiver(9001))
-    eventStream.flatMap(e => e.entities).print()
+    eventStream.flatMap(e => e.entities)
+      .countByValue()
+      .window(Seconds(60))
+      .print()
 
     ssc.start()
     ssc.awaitTermination()
