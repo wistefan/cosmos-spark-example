@@ -13,6 +13,7 @@ object ExampleLDReceiver {
 
     val eventStream = ssc.receiverStream(new NGSILDReceiver(9001))
     eventStream.flatMap(e => e.entities)
+      .map(e =>  e.`type`)
       .countByValue()
       .window(Seconds(60))
       .print()
